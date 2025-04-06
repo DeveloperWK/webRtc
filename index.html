@@ -4,23 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WebRTC</title>
-
+    <script src="main.js" defer></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <h1>WebRTC</h1>
-    <div id="videos">
-      <video class="video-player" id="user-1" autoplay playsinline></video>
-      <video class="video-player" id="user-2" autoplay playsinline></video>
+    <h2>Local Video</h2>
+    <video id="user-1" autoplay playsinline></video>
+    <h2>Remote Video</h2>
+    <video id="user-2" autoplay playsinline></video>
+    <h3>Status: <span id="status">Idle</span></h3>
+    <div>
+      <button id="create-offer">Create Offer</button>
+      <button id="create-answer">Create Answer</button>
+      <button id="add-answer">Add Answer</button>
+      <button id="close-connection">Close</button>
+      <button id="toggle-screen">Share Screen</button>
+      <p id="screen-status" style="color: green; display: none">
+        🖥️ You are sharing your screen
+      </p>
+
+      <button id="toggle-audio">Mute</button>
+      <button id="close-call">Close</button>
     </div>
-    <button id="create-offer">Create Offer</button>
-    <label for="SDP Offer">SDP Offer</label>
-    <textarea id="offer-sdp"></textarea>
-    <button id="create-answer">Create Answer</button>
-    <label for="SDP Answer">SDP Answer</label>
-    <textarea id="answer-sdp"></textarea>
-    <button id="add-answer">Add Answer</button>
-    <script src="agora-rtm-sdk-1.4.4.js"></script>
-    <script src="main.js"></script>
+    <textarea id="offer-sdp" placeholder="Offer SDP"></textarea>
+    <textarea id="answer-sdp" placeholder="Answer SDP"></textarea>
   </body>
 </html>
