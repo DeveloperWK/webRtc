@@ -9,10 +9,17 @@
   </head>
   <body>
     <h1>WebRTC</h1>
-    <h2>Local Video</h2>
-    <video id="user-1" autoplay playsinline></video>
-    <h2>Remote Video</h2>
-    <video id="user-2" autoplay playsinline></video>
+    <div class="video-container">
+      <div class="video-block">
+        <h2>Local Video</h2>
+        <video id="user-1" autoplay playsinline></video>
+      </div>
+      <div class="video-block">
+        <h2>Remote Video</h2>
+        <video id="user-2" autoplay playsinline></video>
+      </div>
+    </div>
+
     <h3>Status: <span id="status">Idle</span></h3>
     <div>
       <button id="create-offer">Create Offer</button>

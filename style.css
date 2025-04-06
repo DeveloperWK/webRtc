@@ -1,21 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f4f7fa;
+  color: #333;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #007acc;
+}
+
+.video-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1100px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.video-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 video {
   width: 100%;
-  max-width: 400px;
-  border-radius: 10px;
-  border: 2px solid #aaa;
-  margin: 10px;
+  max-width: 500px;
+  border: 3px solid #ccc;
+  border-radius: 8px;
+  background-color: #000;
 }
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+h3 {
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+}
+
+#status {
+  font-weight: bold;
+  color: #007700;
+}
+
+.controls {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
 button {
-  margin: 5px;
-  padding: 10px;
+  background-color: #007acc;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 1rem;
 }
+
+button:hover {
+  background-color: #005fa3;
+}
+
+button:active {
+  background-color: #004f8a;
+}
+
 textarea {
   width: 100%;
+  max-width: 600px;
   height: 100px;
-  margin-top: 10px;
+  margin-top: 1rem;
+  padding: 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  font-size: 0.95rem;
+  background-color: #fff;
 }
-@media screen and (max-width: 800px) {
-  body {
-    width: 100%;
+
+#screen-status {
+  font-weight: bold;
+  margin-top: 0.5rem;
+  color: green;
+}
+
+@media (min-width: 768px) {
+  .video-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .video-block {
+    flex: 1;
+    align-items: center;
+  }
+
+  video {
+    max-width: 100%;
   }
 }
