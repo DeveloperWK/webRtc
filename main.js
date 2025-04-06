@@ -193,6 +193,7 @@ const closeConnection = () => {
   updateStatus("Call ended");
 
   console.log("Connection fully closed.");
+  init();
 };
 
 const toggleScreenSharing = async () => {
