@@ -118,49 +118,81 @@ let addAnswer = async () => {
   }
 };
 const closeConnection = () => {
-  if (dataChannel && dataChannel.readyState === "open") {
-    dataChannel.send("close");
+  console.log("Closing connection...");
+
+  // 1. Notify peer via DataChannel
+  try {
+    if (dataChannel && dataChannel.readyState === "open") {
+      dataChannel.send("close");
+      console.log("Sent 'close' to peer");
+    }
+  } catch (err) {
+    console.warn("Failed to send close message:", err.message);
   }
 
-  // Close Peer Connection
-  if (peerConnection) {
-    peerConnection.close();
-    peerConnection = null;
+  // 2. Close PeerConnection
+  try {
+    if (peerConnection) {
+      peerConnection.ontrack = null;
+      peerConnection.onicecandidate = null;
+      peerConnection.oniceconnectionstatechange = null;
+      peerConnection.onicegatheringstatechange = null;
+      peerConnection.ondatachannel = null;
+      peerConnection.close();
+      peerConnection = null;
+    }
+  } catch (err) {
+    console.warn("Error closing peer connection:", err.message);
   }
 
-  // Stop and clear local stream
+  // 3. Stop Local Stream
   if (localStream) {
-    localStream.getTracks().forEach((track) => track.stop());
-    document.getElementById("user-1").srcObject = null;
+    localStream.getTracks().forEach((track) => {
+      try {
+        track.stop();
+      } catch (err) {
+        console.warn("Error stopping local track:", err.message);
+      }
+    });
     localStream = null;
+    document.getElementById("user-1").srcObject = null;
   }
 
-  // Stop and clear remote stream
+  // 4. Stop Remote Stream
   if (remoteStream) {
-    remoteStream.getTracks().forEach((track) => track.stop());
-    document.getElementById("user-2").srcObject = null;
+    remoteStream.getTracks().forEach((track) => {
+      try {
+        track.stop();
+      } catch (err) {
+        console.warn("Error stopping remote track:", err.message);
+      }
+    });
     remoteStream = null;
+    document.getElementById("user-2").srcObject = null;
   }
 
-  // Clear SDP text areas
+  // 5. Clear text areas
   document.getElementById("offer-sdp").value = "";
   document.getElementById("answer-sdp").value = "";
 
-  // Reset screen sharing
+  // 6. Reset other flags (like mute/screen sharing if added)
   isScreenSharing = false;
   screenStream = null;
   originalVideoTrack = null;
-  document.getElementById("toggle-screen").innerText = "Share Screen";
-  document.getElementById("screen-status").style.display = "none";
-
-  // Reset mute state
   isAudioMuted = false;
+
   const muteBtn = document.getElementById("toggle-audio");
   if (muteBtn) muteBtn.innerText = "Mute";
-  if (dataChannel && dataChannel.readyState === "open") {
-    dataChannel.send("close");
-  }
-  updateStatus("Connection closed");
+
+  const screenBtn = document.getElementById("toggle-screen");
+  if (screenBtn) screenBtn.innerText = "Share Screen";
+
+  const status = document.getElementById("screen-status");
+  if (status) status.style.display = "none";
+
+  updateStatus("Call ended");
+
+  console.log("Connection fully closed.");
 };
 
 const toggleScreenSharing = async () => {
